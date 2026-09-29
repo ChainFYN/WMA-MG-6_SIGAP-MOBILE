@@ -212,12 +212,12 @@ class _CamatPageState extends State<CamatPage> {
                 ),
                 const SizedBox(height: 12),
                 const Text(
-                  'Afan',
+                  'Irsyad',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 2),
                 const Text(
-                  'warga@sigap.id',
+                  'camat@sigap.id',
                   style: TextStyle(fontSize: 13, color: Colors.black54),
                 ),
                 const SizedBox(height: 20),
@@ -261,7 +261,7 @@ class _CamatPageState extends State<CamatPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Selamat Pagi, Afan! 👋',
+              'Halo!, Irsyad! 👋',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0F172A)),
             ),
             const SizedBox(height: 4),
