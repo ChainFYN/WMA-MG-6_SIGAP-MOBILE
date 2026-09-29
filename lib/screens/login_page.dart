@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/custom_input.dart';
 import 'home_page.dart';
+import 'camat_page.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
