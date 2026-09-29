@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/report_service.dart';
 import 'form_laporan_page.dart';
+import 'riwayat_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,27 +18,40 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       appBar: _buildAppBar(),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildGreetingSection(),
-            const SizedBox(height: 20),
-            _buildHeroBanner(),
-            const SizedBox(height: 24),
-            _buildStatusHeader(),
-            const SizedBox(height: 16),
-            _buildStatusGrid(),
-            if (ReportService.reports.isNotEmpty) ...[
-              const SizedBox(height: 24),
-              _buildRecentReports(),
-            ],
-          ],
-        ),
-      ),
+      body: _getBody(),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
+  }
+
+  Widget _getBody() {
+    switch (_selectedIndex) {
+      case 0:
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildGreetingSection(),
+              const SizedBox(height: 20),
+              _buildHeroBanner(),
+              const SizedBox(height: 24),
+              _buildStatusHeader(),
+              const SizedBox(height: 16),
+              _buildStatusGrid(),
+              if (ReportService.reports.isNotEmpty) ...[
+                const SizedBox(height: 24),
+                _buildRecentReports(),
+              ],
+            ],
+          ),
+        );
+      case 2:
+        return const RiwayatPage();
+      case 3:
+        return const Center(child: Text('Halaman Profil'));
+      default:
+        return const SizedBox.shrink();
+    }
   }
 
   // === Bagian Navigasi Bawah ===
