@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'screens/register_page.dart';
+import 'package:sigap_app/screens/login_page.dart';
+
 
 void main() {
   runApp(const SigapApp());
@@ -22,7 +23,7 @@ class SigapApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const RegisterPage(),
+      home: const LoginPage()
     );
   }
 }

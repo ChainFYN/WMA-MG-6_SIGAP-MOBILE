@@ -4,6 +4,7 @@ import '../widgets/section_title.dart';
 import '../widgets/custom_dropdown.dart';
 import '../widgets/step_progress.dart';
 import 'login_page.dart';
+import 'home_page.dart'; // 1. Tambahkan import untuk HomePage (Sesuaikan path jika perlu)
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -38,19 +39,23 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
+  // 2. Ubah fungsi _submitForm untuk navigasi ke Dashboard
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Pendaftaran berhasil! Silakan login.'),
+          content: Text('Pendaftaran berhasil! Mengalihkan ke Dashboard...'),
           backgroundColor: Colors.green,
         ),
       );
-      Navigator.pushReplacement(
+      
+      // Menggunakan pushAndRemoveUntil agar user tidak bisa menekan tombol 'Back' ke form register
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => const LoginPage(),
+          builder: (context) => const HomePage(),
         ),
+        (Route<dynamic> route) => false,
       );
     }
   }

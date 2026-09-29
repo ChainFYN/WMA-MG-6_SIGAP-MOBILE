@@ -24,13 +24,22 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  // Mengubah fungsi _login menggunakan pushAndRemoveUntil
   void _login() {
     if (_formKey.currentState!.validate()) {
-      Navigator.pushReplacement(
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Login berhasil! Mengalihkan ke Dashboard...'),
+          backgroundColor: Colors.green,
+        ),
+      );
+
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) => const HomePage(),
         ),
+        (Route<dynamic> route) => false, // Menghapus seluruh riwayat rute sebelumnya
       );
     }
   }
@@ -93,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(18),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
+                          color: Colors.black.withOpacity(0.05), // Memperbaiki withValues menjadi withOpacity sesuai standar Flutter
                           blurRadius: 15,
                           offset: const Offset(0, 5),
                         ),
@@ -221,7 +230,8 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushReplacement(
+                          // Mengubah menjadi push biasa agar fungsi "Back" di HP bisa mengembalikan user ke halaman Login
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => const RegisterPage(),
