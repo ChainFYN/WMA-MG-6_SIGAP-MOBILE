@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../services/report_service.dart';
+import 'form_laporan_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -27,6 +29,10 @@ class _HomePageState extends State<HomePage> {
             _buildStatusHeader(),
             const SizedBox(height: 16),
             _buildStatusGrid(),
+            if (ReportService.reports.isNotEmpty) ...[
+              const SizedBox(height: 24),
+              _buildRecentReports(),
+            ],
           ],
         ),
       ),
@@ -68,13 +74,24 @@ class _HomePageState extends State<HomePage> {
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () async{
+      onTap: () async {
+        if (index == 1) {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const FormLaporanPage(),
+            ),
+          );
+          if (mounted) {
+            setState(() {
+              _selectedIndex = 0;
+            });
+          }
+          return;
+        }
         setState(() {
           _selectedIndex = index; 
         });
-        
-        // Catatan: Jika index == 1 (Kamera), kamu bisa menambahkan 
-        // logika khusus di sini untuk langsung membuka layar kamera.
       },
       child: SizedBox(
         width: 75,
@@ -233,7 +250,17 @@ class _HomePageState extends State<HomePage> {
           Row(
             children: [
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FormLaporanPage(),
+                    ),
+                  );
+                  if (context.mounted) {
+                    setState(() {});
+                  }
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange,
                   foregroundColor: Colors.white,
@@ -272,6 +299,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildStatusGrid() {
+    final totalDiajukan = ReportService.totalSubmitted;
+    final totalMenunggu = ReportService.totalWaiting;
+
     return GridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -280,8 +310,8 @@ class _HomePageState extends State<HomePage> {
       mainAxisSpacing: 12,
       childAspectRatio: 1.5,
       children: [
-        _buildStatusCard('Total Diajukan', '0', 'Laporan', Icons.folder_outlined, Colors.blue[50]!, Colors.blue[800]!),
-        _buildStatusCard('Menunggu', '0', 'Verifikasi', Icons.hourglass_empty, Colors.orange[50]!, Colors.orange[800]!),
+        _buildStatusCard('Total Diajukan', '$totalDiajukan', 'Laporan', Icons.folder_outlined, Colors.blue[50]!, Colors.blue[800]!),
+        _buildStatusCard('Menunggu', '$totalMenunggu', 'Verifikasi', Icons.hourglass_empty, Colors.orange[50]!, Colors.orange[800]!),
         _buildStatusCard('Proses PUPR', '0', 'Lokasi', Icons.engineering_outlined, Colors.blue[50]!, Colors.blue[800]!),
         _buildStatusCard('Tuntas Diperbaiki', '0', 'Jalan', Icons.check_circle_outline, Colors.teal[50]!, Colors.teal[800]!),
       ],
@@ -322,6 +352,151 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _buildRecentReports() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Laporan Baru Dikirim',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0F172A)),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.green.shade50,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.green.shade200),
+              ),
+              child: Text(
+                '${ReportService.reports.length} Baru',
+                style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.green.shade800),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        ...ReportService.reports.map((report) {
+          return Container(
+            margin: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: Colors.grey.shade200),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.02),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.orange.shade50,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        report.kategori,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange.shade800,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.blue.shade50,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Text(
+                        'Menunggu Verifikasi',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF1E88E5),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    const Icon(Icons.location_on_outlined, size: 16, color: Colors.black54),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        '${report.jalanPatokan}, ${report.desa}',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF0F172A),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+                if (report.deskripsi.isNotEmpty) ...[
+                  const SizedBox(height: 6),
+                  Text(
+                    report.deskripsi,
+                    style: const TextStyle(fontSize: 12, color: Colors.black87),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${report.photos.length} Bukti Foto Terunggah',
+                      style: const TextStyle(fontSize: 11, color: Colors.black54),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: report.tingkatBahaya == 'Bahaya Tinggi'
+                            ? const Color(0xFFFEF2F2)
+                            : const Color(0xFFFFFBEB),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        report.tingkatBahaya,
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: report.tingkatBahaya == 'Bahaya Tinggi'
+                              ? const Color(0xFFDC2626)
+                              : const Color(0xFFD97706),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        }),
+      ],
     );
   }
 }
