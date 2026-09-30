@@ -74,9 +74,8 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
           children: [
             _buildNavItem(0, Icons.home_rounded, 'Beranda'),
-            _buildNavItem(1, Icons.camera_alt_rounded, 'Kamera'),
+            _buildNavItem(1, Icons.warning_amber_rounded, 'Lapor'),
             _buildNavItem(2, Icons.history_rounded, 'Riwayat'),
-            // _buildNavItem(3, Icons.person_outline_rounded, 'Profil'),
           ],
         ),
       ),
@@ -284,14 +283,14 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.blue[50],
-            shape: BoxShape.circle,
-          ),
-          child: Icon(Icons.verified_user_outlined, color: Colors.blue[800]),
-        )
+        // Container(
+        //   padding: const EdgeInsets.all(10),
+        //   decoration: BoxDecoration(
+        //     color: Colors.blue[50],
+        //     shape: BoxShape.circle,
+        //   ),
+        //   child: Icon(Icons.verified_user_outlined, color: Colors.blue[800]),
+        // )
       ],
     );
   }
@@ -319,13 +318,6 @@ class _HomePageState extends State<HomePage> {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Row(
-              mainAxisSize: MainAxisSize.min,
-            ),
           ),
           const Text(
             'Menemukan Jalan Rusak di Sekitarmu?',
@@ -378,10 +370,10 @@ class _HomePageState extends State<HomePage> {
         InkWell(
           onTap: () {},
           child: Row(
-            children: [
-              Text('Lihat Semua', style: TextStyle(fontSize: 13, color: Colors.blue[800], fontWeight: FontWeight.bold)),
-              Icon(Icons.arrow_forward, size: 16, color: Colors.blue[800]),
-            ],
+            // children: [
+            //   Text('Lihat Semua', style: TextStyle(fontSize: 13, color: Colors.blue[800], fontWeight: FontWeight.bold)),
+            //   Icon(Icons.arrow_forward, size: 16, color: Colors.blue[800]),
+            // ],
           ),
         ),
       ],
@@ -402,8 +394,8 @@ class _HomePageState extends State<HomePage> {
       children: [
         _buildStatusCard('Total Diajukan', '$totalDiajukan', 'Laporan', Icons.folder_outlined, Colors.blue[50]!, Colors.blue[800]!),
         _buildStatusCard('Menunggu', '$totalMenunggu', 'Verifikasi', Icons.hourglass_empty, Colors.orange[50]!, Colors.orange[800]!),
-        _buildStatusCard('Proses PUPR', '0', 'Lokasi', Icons.engineering_outlined, Colors.blue[50]!, Colors.blue[800]!),
-        _buildStatusCard('Tuntas Diperbaiki', '0', 'Jalan', Icons.check_circle_outline, Colors.teal[50]!, Colors.teal[800]!),
+        _buildStatusCard('Proses PUPR', '2', 'Lokasi', Icons.engineering_outlined, Colors.blue[50]!, Colors.blue[800]!),
+        _buildStatusCard('Tuntas Diperbaiki', '1', 'Jalan', Icons.check_circle_outline, Colors.teal[50]!, Colors.teal[800]!),
       ],
     );
   }

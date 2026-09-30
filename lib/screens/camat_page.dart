@@ -284,14 +284,6 @@ class _CamatPageState extends State<CamatPage> {
             ),
           ],
         ),
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.blue[50],
-            shape: BoxShape.circle,
-          ),
-          child: Icon(Icons.verified_user_outlined, color: Colors.blue[800]),
-        )
       ],
     );
   }
@@ -378,10 +370,6 @@ class _CamatPageState extends State<CamatPage> {
         InkWell(
           onTap: () {},
           child: Row(
-            children: [
-              Text('Lihat Semua', style: TextStyle(fontSize: 13, color: Colors.blue[800], fontWeight: FontWeight.bold)),
-              Icon(Icons.arrow_forward, size: 16, color: Colors.blue[800]),
-            ],
           ),
         ),
       ],
