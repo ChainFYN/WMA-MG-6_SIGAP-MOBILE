@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
             _buildNavItem(0, Icons.home_rounded, 'Beranda'),
             _buildNavItem(1, Icons.camera_alt_rounded, 'Kamera'),
             _buildNavItem(2, Icons.history_rounded, 'Riwayat'),
-            _buildNavItem(3, Icons.person_outline_rounded, 'Profil'),
+            // _buildNavItem(3, Icons.person_outline_rounded, 'Profil'),
           ],
         ),
       ),
@@ -261,7 +261,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Selamat Pagi, Afan! 👋',
+              'Selamat Pagi, Afan!',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0F172A)),
             ),
             const SizedBox(height: 4),
