@@ -76,7 +76,6 @@ class _CamatPageState extends State<CamatPage> {
             _buildNavItem(0, Icons.home_rounded, 'Beranda'),
             _buildNavItem(1, Icons.camera_alt_rounded, 'Kamera'),
             _buildNavItem(2, Icons.history_rounded, 'Riwayat'),
-            _buildNavItem(3, Icons.person_outline_rounded, 'Profil'),
           ],
         ),
       ),
@@ -319,10 +318,6 @@ class _CamatPageState extends State<CamatPage> {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(12),
-            ),
             child: const Row(
               mainAxisSize: MainAxisSize.min,
             ),

@@ -25,48 +25,24 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  // Akun sementara untuk demo, sebelum ada backend
-  static const Map<String, Map<String, String>> _akunDemo = {
-    'warga@sigap.id': {'password': 'warga123', 'role': 'warga'},
-    'camat@sigap.id': {'password': 'camat123', 'role': 'camat'},
-  };
-
-
   // Mengubah fungsi _login menggunakan pushAndRemoveUntil
   void _login() {
-    if (!_formKey.currentState!.validate()) return;
-
-    final email = emailController.text.trim().toLowerCase();
-    final password = passwordController.text;
-    final akun = _akunDemo[email];
-
-    // Cek akun dan password
-    if (akun == null || akun['password'] != password) {
+    if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Email atau password salah'),
-          backgroundColor: Colors.red,
+          content: Text('Login berhasil! Mengalihkan ke Dashboard...'),
+          backgroundColor: Colors.green,
         ),
       );
-      return;
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+        (Route<dynamic> route) => false, // Menghapus seluruh riwayat rute sebelumnya
+      );
     }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Login berhasil! Mengalihkan ke Dashboard...'),
-        backgroundColor: Colors.green,
-      ),
-    );
-
-    // Pilih halaman tujuan berdasarkan role
-    final Widget tujuan =
-        akun['role'] == 'camat' ? const CamatPage() : const HomePage();
-
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => tujuan),
-      (Route<dynamic> route) => false,
-    );
   }
 
   @override

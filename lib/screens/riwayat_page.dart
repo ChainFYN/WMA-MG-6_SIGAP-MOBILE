@@ -88,7 +88,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      _buildFilterChip('Semua (8)'),
+                      _buildFilterChip('Semua (3)'),
                       const SizedBox(width: 8),
                       _buildFilterChip('Diproses (2)'),
                       const SizedBox(width: 8),
